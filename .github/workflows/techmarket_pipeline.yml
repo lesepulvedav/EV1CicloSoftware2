@@ -1,9 +1,9 @@
-name: "Pipeline Principal - TechMarket App v1.0.0"
+name: "Pipeline Principal - TechMarket App v1.1.0"
 
 on:
   push:
     branches:
-      - main
+      - dev
   workflow_dispatch: # Permite ejecución manual para tu demostración en vivo
 
 jobs:
@@ -25,6 +25,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
       aws_session_token: ${{ secrets.aws_session_token }}
       aws_region: ${{ secrets.aws_region }}
+      aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
 
   # 3. Invocación de la plantilla de despliegue
   fase_despliegue_techmarket:
@@ -33,10 +34,12 @@ jobs:
     with:
       namespace: 'staging' # Parametrizado para un entorno de pruebas de TechMarket
       deployment-name: 'techmarket-deployment'
-      image-uri: '${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/techmarket-core-service:${{ github.sha }}'
+      image-name: 'techmarket-core-service'
+      tag: ${{ github.sha }}
     secrets:
       aws_access_key_id: ${{ secrets.aws_access_key_id }}
       aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
       aws_session_token: ${{ secrets.aws_session_token }}
       aws_region: ${{ secrets.aws_region }}
-      eks-cluster-name: ${{ secrets.EKS_CLUSTER_NAME }}
+      aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+      eks_cluster_name: ${{ secrets.EKS_CLUSTER_NAME }}
