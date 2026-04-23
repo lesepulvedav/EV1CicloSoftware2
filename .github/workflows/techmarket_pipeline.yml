@@ -1,4 +1,4 @@
-name: "Pipeline Principal - TechMarket App v1.7.0"
+name: "Pipeline Principal - TechMarket App v1.8.0"
 
 on:
   push:
@@ -7,22 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  # 1. Invocación de la plantilla de pruebas
   fase_pruebas_techmarket:
     uses: ./.github/workflows/template_test.yml
     with:
       node-version: '20.x' 
 
-  # 2. Invocación de la plantilla de construcción
   fase_construccion_techmarket:
     needs: fase_pruebas_techmarket 
     uses: ./.github/workflows/template_build.yml
     with:
       image-name: 'techmarket-core-service' 
       tag: ${{ github.sha }} 
-    secrets: inherit
+      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
 
-  # 3. Invocación de la plantilla de despliegue
   fase_despliegue_techmarket:
     needs: fase_construccion_techmarket
     uses: ./.github/workflows/template_deploy.yml
@@ -31,4 +31,8 @@ jobs:
       deployment-name: 'techmarket-deployment'
       image-name: 'techmarket-core-service'
       tag: ${{ github.sha }} 
-    secrets: inherit
+      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }}
