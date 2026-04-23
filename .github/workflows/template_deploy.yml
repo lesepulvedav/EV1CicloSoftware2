@@ -1,4 +1,4 @@
-name: "Template - Deploy to EKS v1.2.0"
+name: "Template - Deploy to EKS v1.3.0"
 on:
   workflow_call:
     inputs:
@@ -10,22 +10,24 @@ on:
         required: true
         type: string
         description: "Nombre del deployment en el clúster EKS"
-      image-uri:
+      image-name:
         required: true
         type: string
-        description: "URI completa de la imagen en ECR a desplegar"
+        description: "Nombre del repositorio Docker en ECR"
+      tag:
+        required: true
+        type: string
+        description: "Etiqueta (tag) de la imagen a desplegar"
     secrets:
-      aws-access-key-id:
+      AWS_ACCESS_KEY_ID:
         required: true
-      aws-secret-access-key:
+      AWS_SECRET_ACCESS_KEY:
         required: true
-      aws-session-token:
+      AWS_SESSION_TOKEN:
         required: true
-      aws-region:
+      AWS_REGION:
         required: true
-      aws-account-id:
-        required: true
-      eks-cluster-name:
+      EKS_CLUSTER_NAME:
         required: true
 
 jobs:
@@ -43,9 +45,14 @@ jobs:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Actualizar Kubeconfig
-        run: aws eks update-kubeconfig --name ${{ secrets.eks-cluster-name }} --region ${{ secrets.aws_region }}
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
       - name: Desplegar nueva imagen en EKS
+        env:
+          # Usamos la cuenta descubierta en el paso anterior
+          REGISTRY: ${{ steps.aws-account.outputs.account_id }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          IMAGE_NAME: ${{ inputs.image-name }}
+          TAG: ${{ inputs.tag }}
         run: |
           kubectl set image deployment/${{ inputs.deployment-name }} \
-          *=${{ inputs.image-uri }} -n ${{ inputs.namespace }}
+          *=$REGISTRY/$IMAGE_NAME:$TAG -n ${{ inputs.namespace }}
