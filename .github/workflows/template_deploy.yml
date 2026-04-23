@@ -5,30 +5,30 @@ on:
       namespace:
         required: true
         type: string
-        description: "Namespace de Kubernetes para el despliegue (ej. dev, prod)"
       deployment-name:
         required: true
         type: string
-        description: "Nombre del deployment en el clúster EKS"
       image-name:
         required: true
         type: string
-        description: "Nombre del repositorio Docker en ECR"
       tag:
         required: true
         type: string
-        description: "Etiqueta (tag) de la imagen a desplegar"
-    secrets:
       AWS_ACCESS_KEY_ID:
         required: true
+        type: string
       AWS_SECRET_ACCESS_KEY:
         required: true
+        type: string
       AWS_SESSION_TOKEN:
         required: true
+        type: string
       AWS_REGION:
         required: true
+        type: string
       EKS_CLUSTER_NAME:
         required: true
+        type: string
 
 jobs:
   deploy:
@@ -38,19 +38,23 @@ jobs:
       - name: Configurar credenciales de AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ inputs.AWS_SESSION_TOKEN }}
+          aws-region: ${{ inputs.AWS_REGION }}
+
+      - name: Obtener ID de la cuenta de AWS dinámicamente
+        id: aws-account
+        run: |
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          echo "account_id=$ACCOUNT_ID" >> $GITHUB_OUTPUT
 
       - name: Actualizar Kubeconfig
-        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+        run: aws eks update-kubeconfig --name ${{ inputs.EKS_CLUSTER_NAME }} --region ${{ inputs.AWS_REGION }}
 
       - name: Desplegar nueva imagen en EKS
         env:
-          # Usamos la cuenta descubierta en el paso anterior
-          REGISTRY: ${{ steps.aws-account.outputs.account_id }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          REGISTRY: ${{ steps.aws-account.outputs.account_id }}.dkr.ecr.${{ inputs.AWS_REGION }}.amazonaws.com
           IMAGE_NAME: ${{ inputs.image-name }}
           TAG: ${{ inputs.tag }}
         run: |
