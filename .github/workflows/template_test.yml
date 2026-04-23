@@ -21,7 +21,7 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Ejecutar pruebas
         run: npm test
