@@ -1,4 +1,4 @@
-name: "Template - Deploy to EKS v1.3.0"
+name: "Template - Deploy to EKS v1.5.0"
 on:
   workflow_call:
     inputs:
@@ -14,21 +14,17 @@ on:
       tag:
         required: true
         type: string
+    secrets:
       AWS_ACCESS_KEY_ID:
         required: true
-        type: string
       AWS_SECRET_ACCESS_KEY:
         required: true
-        type: string
       AWS_SESSION_TOKEN:
         required: true
-        type: string
       AWS_REGION:
         required: true
-        type: string
       EKS_CLUSTER_NAME:
         required: true
-        type: string
 
 jobs:
   deploy:
@@ -38,10 +34,10 @@ jobs:
       - name: Configurar credenciales de AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ inputs.AWS_SESSION_TOKEN }}
-          aws-region: ${{ inputs.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Obtener ID de la cuenta de AWS dinámicamente
         id: aws-account
@@ -50,11 +46,11 @@ jobs:
           echo "account_id=$ACCOUNT_ID" >> $GITHUB_OUTPUT
 
       - name: Actualizar Kubeconfig
-        run: aws eks update-kubeconfig --name ${{ inputs.EKS_CLUSTER_NAME }} --region ${{ inputs.AWS_REGION }}
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
       - name: Desplegar nueva imagen en EKS
         env:
-          REGISTRY: ${{ steps.aws-account.outputs.account_id }}.dkr.ecr.${{ inputs.AWS_REGION }}.amazonaws.com
+          REGISTRY: ${{ steps.aws-account.outputs.account_id }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           IMAGE_NAME: ${{ inputs.image-name }}
           TAG: ${{ inputs.tag }}
         run: |
