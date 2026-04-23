@@ -1,4 +1,4 @@
-name: "Template - Build & Push v1.0.0"
+name: "Template - Build & Push v1.1.0"
 on:
   workflow_call:
     inputs:
@@ -15,8 +15,10 @@ on:
         required: true
       aws-secret-access-key:
         required: true
-      aws-region:
+      aws-session-token:   
         required: true
+      aws-region:
+        required: true   
 
 jobs:
   build:
