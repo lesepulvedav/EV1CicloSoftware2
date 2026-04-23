@@ -1,4 +1,4 @@
-name: "Pipeline Principal - TechMarket App v1.4.0"
+name: "Pipeline Principal - TechMarket App v1.5.0"
 
 on:
   push:
@@ -25,6 +25,7 @@ jobs:
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       aws-region: ${{ secrets.AWS_REGION }}
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
   # 3. Invocación de la plantilla de despliegue
   fase_despliegue_techmarket:
@@ -36,8 +37,9 @@ jobs:
       image-name: 'techmarket-core-service'
       tag: ${{ github.sha }} 
     secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      aws-region: ${{ secrets.AWS_REGION }
+      eks_cluster_name: ${{ secrets.EKS_CLUSTER_NAME }}
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
