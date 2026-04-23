@@ -1,4 +1,4 @@
-name: "Pipeline Principal - TechMarket App v1.2.0"
+name: "Pipeline Principal - TechMarket App v1.3.0"
 
 on:
   push:
@@ -21,10 +21,10 @@ jobs:
       image-name: 'techmarket-core-service' # Nombre genérico para el caso
       tag: ${{ github.sha }} 
     secrets:
-      aws-access-key-id: ${{ secrets.aws_access_key_id }}
-      aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-      aws-session-token: ${{ secrets.aws_session_token }}
-      aws-region: ${{ secrets.aws_region }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      aws-region: ${{ secrets.AWS_REGION }}
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
   # 3. Invocación de la plantilla de despliegue
@@ -37,9 +37,9 @@ jobs:
       image-name: 'techmarket-core-service'
       tag: ${{ github.sha }}
     secrets:
-      aws-access-key-id: ${{ secrets.aws_access_key_id }}
-      aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-      aws-session-token: ${{ secrets.aws_session_token }}
-      aws-region: ${{ secrets.aws_region }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      aws-region: ${{ secrets.AWS_REGION }}
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
       eks_cluster_name: ${{ secrets.EKS_CLUSTER_NAME }}
