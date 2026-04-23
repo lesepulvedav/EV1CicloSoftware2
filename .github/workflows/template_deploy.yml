@@ -1,4 +1,4 @@
-name: "Template - Deploy to EKS v1.0.0"
+name: "Template - Deploy to EKS v1.1.0"
 on:
   workflow_call:
     inputs:
@@ -19,7 +19,11 @@ on:
         required: true
       aws-secret-access-key:
         required: true
+      aws-session-token:
+        required: true
       aws-region:
+        required: true
+      aws-account-id:
         required: true
       eks-cluster-name:
         required: true
