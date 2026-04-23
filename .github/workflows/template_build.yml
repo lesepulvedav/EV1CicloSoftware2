@@ -1,4 +1,4 @@
-name: "Template - Build & Push v1.1.0"
+name: "Template - Build & Push v1.2.0"
 on:
   workflow_call:
     inputs:
@@ -15,10 +15,13 @@ on:
         required: true
       aws-secret-access-key:
         required: true
-      aws-session-token:   
+      aws-session-token:
         required: true
       aws-region:
-        required: true   
+        required: true
+      aws-account-id:
+        required: true
+        
 
 jobs:
   build:
@@ -35,6 +38,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Login en Amazon ECR
         id: login-ecr
