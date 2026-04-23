@@ -1,4 +1,4 @@
-name: "Template - Deploy to EKS v1.1.0"
+name: "Template - Deploy to EKS v1.2.0"
 on:
   workflow_call:
     inputs:
@@ -36,10 +36,11 @@ jobs:
       - name: Configurar credenciales de AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws_access_key_id: ${{ secrets.aws_access_key_id }}
-          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
-          aws_session_token: ${{ secrets.aws_session_token }}
-          aws_region: ${{ secrets.aws_region }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Actualizar Kubeconfig
         run: aws eks update-kubeconfig --name ${{ secrets.eks-cluster-name }} --region ${{ secrets.aws_region }}
