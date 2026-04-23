@@ -21,11 +21,11 @@ jobs:
       image-name: 'techmarket-core-service' # Nombre genérico para el caso
       tag: ${{ github.sha }} 
     secrets:
-      aws_access_key_id: ${{ secrets.aws_access_key_id }}
-      aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
-      aws_session_token: ${{ secrets.aws_session_token }}
-      aws_region: ${{ secrets.aws_region }}
-      aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+      aws-access-key-id: ${{ secrets.aws_access_key_id }}
+      aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+      aws-session-token: ${{ secrets.aws_session_token }}
+      aws-region: ${{ secrets.aws_region }}
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
   # 3. Invocación de la plantilla de despliegue
   fase_despliegue_techmarket:
@@ -37,9 +37,9 @@ jobs:
       image-name: 'techmarket-core-service'
       tag: ${{ github.sha }}
     secrets:
-      aws_access_key_id: ${{ secrets.aws_access_key_id }}
-      aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
-      aws_session_token: ${{ secrets.aws_session_token }}
-      aws_region: ${{ secrets.aws_region }}
-      aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+      aws-access-key-id: ${{ secrets.aws_access_key_id }}
+      aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+      aws-session-token: ${{ secrets.aws_session_token }}
+      aws-region: ${{ secrets.aws_region }}
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
       eks_cluster_name: ${{ secrets.EKS_CLUSTER_NAME }}
