@@ -1,0 +1,46 @@
+name: "Template - Deploy to EKS v1.0.0"
+on:
+  workflow_call:
+    inputs:
+      namespace:
+        required: true
+        type: string
+        description: "Namespace de Kubernetes para el despliegue (ej. dev, prod)"
+      deployment-name:
+        required: true
+        type: string
+        description: "Nombre del deployment en el clúster EKS"
+      image-uri:
+        required: true
+        type: string
+        description: "URI completa de la imagen en ECR a desplegar"
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
+      aws-region:
+        required: true
+      eks-cluster-name:
+        required: true
+
+jobs:
+  deploy:
+    name: Despliegue en Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configurar credenciales de AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws_access_key_id: ${{ secrets.aws_access_key_id }}
+          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
+          aws_session_token: ${{ secrets.aws_session_token }}
+          aws_region: ${{ secrets.aws_region }}
+
+      - name: Actualizar Kubeconfig
+        run: aws eks update-kubeconfig --name ${{ secrets.eks-cluster-name }} --region ${{ secrets.aws_region }}
+
+      - name: Desplegar nueva imagen en EKS
+        run: |
+          kubectl set image deployment/${{ inputs.deployment-name }} \
+          *=${{ inputs.image-uri }} -n ${{ inputs.namespace }}
