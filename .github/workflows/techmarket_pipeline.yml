@@ -1,10 +1,10 @@
-name: "Pipeline Principal - TechMarket App v1.3.0"
+name: "Pipeline Principal - TechMarket App v1.4.0"
 
 on:
   push:
     branches:
       - dev
-  workflow_dispatch: # Permite ejecución manual para tu demostración en vivo
+  workflow_dispatch:
 
 jobs:
   # 1. Invocación de la plantilla de pruebas
@@ -18,28 +18,26 @@ jobs:
     needs: fase_pruebas_techmarket 
     uses: ./.github/workflows/template_build.yml
     with:
-      image-name: 'techmarket-core-service' # Nombre genérico para el caso
+      image-name: 'techmarket-core-service' 
       tag: ${{ github.sha }} 
     secrets:
       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       aws-region: ${{ secrets.AWS_REGION }}
-      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
 
   # 3. Invocación de la plantilla de despliegue
   fase_despliegue_techmarket:
     needs: fase_construccion_techmarket
     uses: ./.github/workflows/template_deploy.yml
     with:
-      namespace: 'staging' # Parametrizado para un entorno de pruebas de TechMarket
+      namespace: 'staging' 
       deployment-name: 'techmarket-deployment'
       image-name: 'techmarket-core-service'
-      tag: ${{ github.sha }}
+      tag: ${{ github.sha }} 
     secrets:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-      aws-region: ${{ secrets.AWS_REGION }}
-      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
-      eks_cluster_name: ${{ secrets.EKS_CLUSTER_NAME }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
