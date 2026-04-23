@@ -1,27 +1,25 @@
-name: "Template - Build & Push v1.3.0"
+name: "Template - Build & Push v1.2.0"
 on:
   workflow_call:
     inputs:
       image-name:
         required: true
         type: string
-        description: "Nombre del repositorio Docker en ECR"
       tag:
         required: true
         type: string
-        description: "Etiqueta (tag) de la imagen"
-    secrets:
-      aws-access-key-id:
+      AWS_ACCESS_KEY_ID:
         required: true
-      aws-secret-access-key:
+        type: string
+      AWS_SECRET_ACCESS_KEY:
         required: true
-      aws-session-token:
+        type: string
+      AWS_SESSION_TOKEN:
         required: true
-      aws-region:
+        type: string
+      AWS_REGION:
         required: true
-      aws-account-id:
-        required: true
-        
+        type: string
 
 jobs:
   build:
@@ -34,11 +32,10 @@ jobs:
       - name: Configurar credenciales de AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ inputs.AWS_SESSION_TOKEN }}
+          aws-region: ${{ inputs.AWS_REGION }}
 
       - name: Login en Amazon ECR
         id: login-ecr
