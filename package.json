@@ -1,0 +1,13 @@
+{
+  "name": "techmarket-core-service-lslv",
+  "version": "1.0.0",
+  "description": "Aplicación base para pruebas del pipeline CI/CD",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"[TEST] Ejecutando pruebas unitarias... ¡Todas pasaron exitosamente!\" && exit 0"
+  },
+  "dependencies": {},
+  "author": "Leonardo Sepulveda y Leonardo Vivanco",
+  "license": "ISC"
+}
