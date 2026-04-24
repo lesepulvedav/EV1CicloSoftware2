@@ -1,4 +1,4 @@
-name: "Template - Deploy to EKS v1.5.0"
+name: "Template - Deploy to EKS v1.5.0" #
 on:
   workflow_call:
     inputs:
