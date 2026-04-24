@@ -8,7 +8,7 @@ Repositorio para la evaluación N°1 de Ciclo del Software II
 
 ---
 
-## Visión General del Proyecto
+### Visión General del Proyecto
 
 Este repositorio contiene la implementación del servicio principal (`techmarket-core-service-lslv`) y su respectiva automatización del ciclo de vida del software mediante un pipeline de Integración y Despliegue Continuo (CI/CD) utilizando GitHub Actions.
 
