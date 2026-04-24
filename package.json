@@ -8,6 +8,6 @@
     "test": "echo \"[TEST] Ejecutando pruebas unitarias... ¡Todas pasaron exitosamente!\" && exit 0"
   },
   "dependencies": {},
-  "author": "Leo Sepulveda",
+  "author": "Leonardo Sepulveda y Leonardo Vivanco",
   "license": "ISC"
 }
