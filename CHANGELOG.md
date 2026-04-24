@@ -10,3 +10,6 @@ Todos los cambios notables del proyecto `techmarket-core-service` serán documen
 - Integración AWS: Conexión segura mediante *secrets* para enviar imágenes a Amazon ECR.
 - Despliegue Continuo: Actualización automática del servicio en el clúster Kubernetes (AWS EKS) dentro del entorno `pruebaslslv`.
 - Documentación: Archivo `README.md` con la justificación de negocio y arquitectura del pipeline.
+
+  
+😺
