@@ -3,6 +3,7 @@ name: "Pipeline Principal - TechMarket App"
 on:
   push:
     branches:
+      - dev
       - main
   workflow_dispatch:
 
