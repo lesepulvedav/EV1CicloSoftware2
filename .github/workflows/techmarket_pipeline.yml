@@ -28,7 +28,7 @@ jobs:
     needs: fase_construccion_techmarket
     uses: ./.github/workflows/template_deploy.yml
     with:
-      namespace: 'staging' 
+      namespace: 'pruebaslslv' 
       deployment-name: 'techmarket-deployment'
       image-name: 'techmarket-core-service-lslv'
       tag: ${{ github.sha }} 
