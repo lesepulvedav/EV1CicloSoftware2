@@ -1,5 +1,5 @@
 {
-  "name": "techmarket-core-service",
+  "name": "techmarket-core-service-lslv",
   "version": "1.0.0",
   "description": "Aplicación base para pruebas del pipeline CI/CD",
   "main": "index.js",
