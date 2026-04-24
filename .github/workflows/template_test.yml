@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
-        uses: actions/checkout@v4 # Acción externa para obtener el código
+        uses: actions/checkout@v4 # Acción externa para obtener el código #
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v4 # Acción externa para entorno de ejecución
+        uses: actions/setup-node@v4 # Acción externa para entorno de ejecución #
         with:
           node-version: ${{ inputs.node-version }}
 
