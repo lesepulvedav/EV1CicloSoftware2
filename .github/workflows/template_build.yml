@@ -1,3 +1,4 @@
+# 😺
 name: "Template - Build & Push v1.4.0"
 on:
   workflow_call:
